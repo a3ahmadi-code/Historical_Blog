@@ -1,0 +1,80 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>register</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+
+	</head>
+	<body class="img js-fullheight" style="background-image: url({% static 'account/images/bg.jpg' %});">
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+		      	<h3 class="mb-4 text-center">Create your account</h3>
+                        {% if error %}
+                        {% for item in error %}
+                                <p class="text text-danger bg-white rounded mb-2">{{ item }}</p>
+                        {% endfor %}
+
+                        {% endif %}
+		      	<form action="" class="signin-form" method="post">
+                    {% csrf_token %}
+		      		<div class="form-group">
+		      			<input name="username" type="text" class="form-control" placeholder="Username" required>
+		      		</div>
+	            <div class="form-group">
+	              <input name="password1" id="password-field" type="password" class="form-control" placeholder="Password" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+
+                    <div class="form-group">
+	              <input name="password2" id="password-field" type="password" class="form-control" placeholder="Repeat password" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+
+                    <div class="form-group">
+	              <input name="email" id="email" type="email" class="form-control" placeholder="email" required>
+	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	            </div>
+
+	            <div class="form-group">
+	            	<button type="submit" class="form-control btn btn-primary submit px-3">register</button>
+	            </div>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50">
+
+								</div>
+								<div class="w-50 text-md-right">
+
+								</div>
+	            </div>
+	          </form>
+                        <a href="{% url 'account:login' %}"><p class="w-100 text-center">&mdash; Do you have an account? &mdash;</p></a>
+
+		      </div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="{% static 'account/js/jquery.min.js' %}"></script>
+  <script src="{% static 'account/js/popper.js' %}"></script>
+  <script src="{% static 'account/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'account/js/main.js' %}"></script>
+
+	</body>
+</html>

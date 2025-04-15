@@ -1,0 +1,416 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap"
+          rel="stylesheet">
+
+    <title>Historical Blog - Article Details</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'blog/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="{% static 'blog/assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/assets/css/templatemo-stand-blog.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/assets/css/owl.css' %}">
+    <!--
+
+    TemplateMo 551 Stand Blog
+
+    https://templatemo.com/tm-551-stand-blog
+
+    -->
+</head>
+
+<body>
+
+<!-- ***** Preloader Start ***** -->
+<div id="preloader">
+    <div class="jumper">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+<!-- ***** Preloader End ***** -->
+
+<!-- Header -->
+<header class="">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'blog:home' %}"><h2>Historical Blog<em>.</em></h2></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:home' %}">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:about' %}">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:article_list' %}">Blog Entries</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'blog:contact' %}">Contact Us</a>
+                    </li>
+                    {% if not request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:login' %}">Login</a>
+                    </li>
+                    /
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:register' %}">Register</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        {% if request.user.profiles.Profile_photo %}
+                        <a class="nav-link" href="{% url 'account:profile_detail' request.user.id %}"><img
+                                style="width: 40px;height: 40px; border-radius: 100%"
+                                src="{{ request.user.profiles.Profile_photo.url }}" alt=""></a>
+                        {% else %}
+                        <a class="nav-link" href="{% url 'account:profile_detail' request.user.id %}"><img
+                                style="width: 40px;height: 40px; border-radius: 100%"
+                                src="{% static 'blog/assets/images/profile_def.png' %}" alt=""></a>
+                        {% endif %}
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:profile_detail' request.user.id %}">{{ request.user.username }}</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Page Content -->
+<!-- Banner Starts Here -->
+<div class="heading-page header-text">
+    <section class="page-heading">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-content">
+                        <h4>Article Details</h4>
+                        <h2>{{ object.title }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Banner Ends Here -->
+
+<section class="call-to-action">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-content">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <span>Example of work:</span>
+                            <h4>Programmer Ali Ahmadi</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="main-button">
+                                <a href="https://t.me/A3_O25" target="_parent">Contact us (Telegram)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="blog-posts grid-system">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="all-blog-posts">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="blog-post">
+                                <div class="blog-thumb">
+                                    <img src="{{ object.image.url }}" alt="">
+                                </div>
+                                <div class="down-content">
+                                    <span>{{ object.category }}</span>
+                                    <a href="{% url 'blog:article_detail' object.slug %}"><h4>{{ object.title }}</h4>
+                                    </a>
+                                    <ul class="post-info">
+                                        <li><a href="{% url 'account:profile_detail' object.author.id %}">{{ object.author }}</a></li>
+                                        <li><a href="{% url 'blog:article_detail' object.slug %}">{{ object.created }}</a></li>
+                                        <li><a href="{% url 'blog:article_detail' object.slug %}">{{ object.comments.count }}  Comments</a></li>
+                                    </ul>
+                                    <p>{{ object.body }}</p>
+                                    <div class="post-options">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <ul class="post-tags">
+                                                    <li>
+                                                        {% if is_liked %}
+                                                        <a onclick="like('{{ object.slug }}','{{ object.id }}')"><i id="like" class="fa fa-heart"></i></a>
+                                                        <span id="count">{{ object.likes.count }}</span>
+                                                        {% else %}
+                                                        <a onclick="like('{{ object.slug }}','{{ object.id }}')"><i id="like" class="fa fa-heart-o"></i></a>
+                                                        <span id="count">{{ object.likes.count }}</span>
+                                                        {% endif %}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-6">
+                                                <ul class="post-share">
+                                                    <li><i class="fa fa-share-alt"></i></li>
+                                                    <li><a href="https://t.me/share/url?url={{ request.build_absolute_uri }}" target="_blank">Telegram</a>,</li>
+                                                    <li><a href="#"> Twitter</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" id="col-lg-12">
+                            <div class="sidebar-item comments">
+                                <div class="sidebar-heading">
+                                    <h2>Number of comments: {{ object.comments.count }}</h2>
+                                </div>
+                                <div class="content" id="content">
+                                    <ul>
+                                        {% for comment in object.comments.all %}
+                                        {% if comment.prent == None %}
+                                        <li>
+                                            <div class="author-thumb">
+                                                {% if comment.user.profiles.Profile_photo %}
+                                                <a href="{% url 'account:profile_detail' comment.user.id %}"><img src="{{ comment.user.profiles.Profile_photo.url }}" alt=""></a>
+                                                {% else %}
+                                                <a href="{% url 'account:profile_detail' comment.user.id %}"><img src="{% static 'blog/assets/images/profile_def.png' %}" alt=""></a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="right-content">
+                                                <a href="{% url 'account:profile_detail' comment.user.id %}"><h4>{{ comment.user }}<span>{{ comment.created_at }}</span></h4></a>
+                                                <p>{{ comment.body }}</p>
+                                                <form method="post">
+                                                    <a onclick="set_valve({{ comment.id }})" name="reply" id="reply"
+                                                       class="btn btn-primary">Repli</a>
+                                                </form>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        {% for reply in comment.repli.all %}
+                                        <li class="replied">
+                                            <div class="author-thumb">
+                                                {% if reply.user.profiles.Profile_photo %}
+                                                <a href="{% url 'account:profile_detail' reply.user.id %}"><img src="{{ reply.user.profiles.Profile_photo.url }}" alt=""></a>
+                                                {% else %}
+                                                <a href="{% url 'account:profile_detail' reply.user.id %}"><img src="{% static 'blog/assets/images/profile_def.png' %}" alt=""></a>
+                                                {% endif %}
+                                            </div>
+                                            <div class="right-content">
+                                                <a href="{% url 'account:profile_detail' reply.user.id %}"><h4>{{ reply.user }}<span>{{ reply.created_at }}</span></h4></a>
+                                                <p>{{ reply.body }}</p>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="sidebar-item submit-comment">
+                                <div class="sidebar-heading">
+                                    <h2>Leave a comment</h2>
+                                </div>
+                                <div class="content">
+                                    {% if request.user.is_authenticated %}
+                                    <form id="comment" action="#" method="post">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12">
+                                                <fieldset>
+                                                    <input name="pr_id" type="hidden" id="pr_id">
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <fieldset>
+                                                    <input name="body" rows="6" id="body"
+                                                           placeholder="Type your comment" required="">
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <fieldset>
+                                                    <button type="submit" id="form-submit" class="main-button">Submit
+                                                    </button>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    {% else %}
+                                    <div class="col-lg-12">
+                                        <fieldset>
+                                            <a href="{% url 'account:login' %}">
+                                                <button type="submit" id="form-submit" class="main-button">To post a
+                                                    comment, you must first log in or register...
+                                                </button>
+                                            </a>
+                                        </fieldset>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="sidebar">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="sidebar-item search">
+                                <form id="search_form" name="gs" method="GET" action="{% url 'blog:search' %}">
+                                    <input type="text" name="q" class="searchText"
+                                           placeholder="Search in articles and locations..."
+                                           autocomplete="on">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="sidebar-item recent-posts">
+                                <div class="sidebar-heading">
+                                    <h2>Recent Posts</h2>
+                                </div>
+                                <div class="content">
+                                    <ul>
+                                        {% for i in recent_articles %}
+                                        <li><a href="{% url 'blog:article_detail' i.slug %}">
+                                            <h5>{{ i.title }}</h5>
+                                            <span>{{ i.created }}</span>
+                                        </a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="sidebar-item categories">
+                                <div class="sidebar-heading">
+                                    <h2>Categories</h2>
+                                </div>
+                                <div class="content">
+                                    <ul>
+                                        {% for i in category %}
+                                        <li><a href="{% url 'blog:category_detail' i.id %}">- {{ i.title }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="sidebar-item tags">
+                                <div class="sidebar-heading">
+                                    <h2></h2>
+                                </div>
+                                <div class="content">
+                                    <ul>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <ul class="social-icons">
+                    {% for i in socialMedia %}
+                    <li><a href="{{ i.Facebook }}">Facebook</a></li>
+                    <li><a href="{{ i.Twitter }}">Twitter</a></li>
+                    <li><a href="{{ i.Telegram }}">Telegram</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-lg-12">
+                <div class="copyright-text">
+                    <p>Knowing history is your right...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'blog/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'blog/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+<!-- Additional Scripts -->
+<script src="{% static 'blog/assets/js/custom.js' %}"></script>
+<script src="{% static 'blog/assets/js/owl.js' %}"></script>
+<script src="{% static 'blog/assets/js/slick.js' %}"></script>
+<script src="{% static 'blog/assets/js/isotope.js' %}"></script>
+<script src="{% static 'blog/assets/js/accordions.js' %}"></script>
+<script src="{% static 'blog/assets/js/like.js' %}"></script>
+
+
+<script language="text/Javascript">
+    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+    function clearField(t) {                   //declaring the array outside of the
+        if (!cleared[t.id]) {                      // function makes it static and global
+            cleared[t.id] = 1;  // you could use true and false, but that's more typing
+            t.value = '';         // with more chance of typos
+            t.style.color = '#fff';
+        }
+    }
+</script>
+
+<script>
+    function set_valve(id) {
+    document.getElementById('pr_id').value = id;
+
+    // اسکرول نرم به سمت المنت با id="body"
+    const bodyElement = document.getElementById('body');
+    if (bodyElement) {
+        bodyElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        bodyElement.focus(); // اگر بخوای فوکوس هم بره روی تکست‌باکس
+    }
+}
+
+</script>
+
+
+</body>
+
+</html>
